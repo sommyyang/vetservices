@@ -1,0 +1,100 @@
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE IF EXISTS clients;
+CREATE TABLE clients(
+id int unsigned NOT NULL auto_increment,
+    client_email varchar(50) NOT NULL,
+    client_password varchar(10) NOT NULL,
+    client_fname varchar(20) NOT NULL,
+    client_lname varchar(20) NOT NULL,
+    add_street varchar(50),
+    add_city varchar(20),
+    add_state varchar(20),
+    add_zip int(10),
+    primary key (id)
+);
+
+DROP TABLE IF EXISTS admin;
+CREATE TABLE admin(
+admin_id int unsigned NOT NULL auto_increment,
+    admin_email varchar(50) NOT NULL,
+    admin_password varchar(10) NOT NULL,
+    admin_fname varchar(20) NOT NULL,
+    admin_lname varchar(20) NOT NULL,
+primary key (admin_id)
+);
+
+DROP TABLE IF EXISTS scheduler;
+CREATE TABLE scheduler (
+sched_id int unsigned NOT NULL auto_increment,
+    sched_email varchar(50) NOT NULL,
+    sched_password varchar(10) NOT NULL,
+    sched_fname varchar(20) NOT NULL,
+    sched_lname varchar(20) NOT NULL,
+primary key (sched_id)
+);
+
+DROP TABLE IF EXISTS pets;
+CREATE TABLE pets (
+pet_id int unsigned NOT NULL auto_increment,
+pet_name varchar(20) NOT NULL,
+    id int unsigned NOT NULL,
+primary key (pet_id),
+    CONSTRAINT
+foreign key (id) references clients (id)
+);
+
+DROP TABLE IF EXISTS appointment;
+CREATE TABLE appointment (
+app_id int unsigned NOT NULL auto_increment,
+    id int unsigned NOT NULL,
+    app_date date NOT NULL,
+    app_time time NOT NULL,
+    pet_id int unsigned NOT NULL,
+    sched_id int unsigned NOT NULL,
+    status varchar(10) NOT NULL,
+    primary key (app_id),
+        CONSTRAINT
+foreign key (id) references clients (id),
+        foreign key (pet_id) references pets (pet_id),
+        foreign key (sched_id) references scheduler (sched_id)
+);
+
+INSERT INTO clients (client_email, client_password, client_fname, client_lname, add_street, add_city, add_state, add_zip) VALUES ('munasar.mohamud@ics.com','User123','Munasar','Mohamud','123 John street','Saint Paul','MN','33333');
+INSERT INTO clients (client_email, client_password, client_fname, client_lname, add_street, add_city, add_state, add_zip) VALUES ('shoua.lor@ics.com','User456','Shoua','Lor','545 Jackson street','Hopkins','MN','52355');
+INSERT INTO clients (client_email, client_password, client_fname, client_lname, add_street, add_city, add_state, add_zip) VALUES ('Jones.John@ics.com','User789','Jones','John','123 Dale Ave','Saint Paul','MN','25654');
+INSERT INTO clients (client_email, client_password, client_fname, client_lname, add_street, add_city, add_state, add_zip) VALUES ('Sommy.Yang@ics.com','User000','Sommy','Yang','123 Main Street ','Saint Paul','MN','24785');
+
+INSERT INTO scheduler( sched_email,sched_password,sched_fname,sched_lname) VALUES('Jenny.mike@ics.com','Tester1','Jenny','Mike');
+INSERT INTO scheduler( sched_email,sched_password,sched_fname,sched_lname) VALUES('Sue.Shane@ics.com','Tester2','Sue','Shane');
+INSERT INTO scheduler( sched_email,sched_password,sched_fname,sched_lname) VALUES('Laura.Anderson@ics.com','Tester3','Laura','Anderson');
+INSERT INTO scheduler( sched_email,sched_password,sched_fname,sched_lname) VALUES('Clark.Kent@ics.com','Tester4','Clark','Kent');
+
+INSERT INTO pets(pet_name,id) VALUES('Marley','1');
+INSERT INTO pets(pet_name,id) VALUES('Max','2');
+INSERT INTO pets(pet_name,id) VALUES('Coco','3');
+INSERT INTO pets(pet_name,id) VALUES('Bella','4');
+
+INSERT INTO appointment(id,app_date,app_time,pet_id,sched_id,status) 
+VALUES('1','2020,04,20','10:00:00','1','1','Pending');
+INSERT INTO appointment(id,app_date,app_time,pet_id,sched_id,status) 
+VALUES('2','2020,04,25','12:00:00','2','2','Approved');
+INSERT INTO appointment(id,app_date,app_time,pet_id,sched_id,status) 
+VALUES('3','2020,04,25','14:00:00','3','3','Denied');
+INSERT INTO appointment(id,app_date,app_time,pet_id,sched_id,status) 
+VALUES('4','2020,04,26','13:00:00','4','4','Pending');
+
+INSERT INTO admin(admin_email,admin_password,admin_fname,admin_lname) 
+VALUES('admin@ics.com','Admin2193!','Admin','Admin');
+INSERT INTO admin(admin_email,admin_password,admin_fname,admin_lname) 
+VALUES('syuni@ics.com','NZvm7Gn27D','Sam','Yuni');
+INSERT INTO admin(admin_email,admin_password,admin_fname,admin_lname) 
+VALUES('jdoe@ics.com','jdoe123','Jon','Doe');
+INSERT INTO admin(admin_email,admin_password,admin_fname,admin_lname) 
+VALUES('chaves@ics.com','Star987','Beth','Chaves');
+
+select * from admin;
+select * from clients;
+select * from scheduler;
+select * from pets;
+select * from appointment;
